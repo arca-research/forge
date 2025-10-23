@@ -1,0 +1,9 @@
+.env
+
+__pycache__
+
+# --- templates ---
+forge/_templates/*
+!forge/_templates/__init__.py
+!forge/_templates/base.py
+!forge/_templates/note.md
