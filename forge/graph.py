@@ -154,8 +154,6 @@ class Entity:
         self._aliases = None
         self._claims = None
 
-        self.directionality = None 
-
 
     @property
     def aliases(self) -> list[str]:
@@ -179,11 +177,10 @@ class Entity:
 
     def get_relationships(self, min_strength: Optional[float], directed: Optional[bool]) -> list[Relationship]:
         rels: list[RelationshipRecord] = self._state.load_relationships(
-            self.canonical_name,
-            min_strength
+            self.canonical_name, min_strength, directed
         )
         return [
-            Relationship(r.source_name, r.target_name, r.strength, self.directionality, self._state)
+            Relationship(r.source_name, r.target_name, r.strength, self._state, r.directed)
             for r in rels
         ]
 

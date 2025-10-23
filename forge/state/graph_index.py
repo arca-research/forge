@@ -432,8 +432,8 @@ class GraphIndex:
 
             return [
                 RelationshipRecord(
-                    source=r["source"],
-                    target=r["target"],
+                    source_name=r["source"],
+                    target_name=r["target"],
                     strength=r["strength"],
                     directed=bool(r["directed"]),
                 )
