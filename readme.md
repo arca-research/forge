@@ -3,7 +3,7 @@
 forge is a lightweight knowledge graph + vectorDB embedded library.
 
 <p align="center">
-  <img src="https://github.com/arca-research/forge/blob/main/forge/forge.png" width="450"/>
+  <img src="https://github.com/arca-research/forge/blob/main/forge.png" width="450"/>
 </p>
 <p align="center">
         <b>VERSION 0.1</b>&nbsp
