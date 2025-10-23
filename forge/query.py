@@ -183,7 +183,7 @@ class GraphQueryEngine:
         return self.index.list_all_entities()
 
 
-    def list_all_aliases(self, entity_name: Optional[str] = None):
+    def list_all_aliases(self, entity_name: str):
         """List aliases"""
         return self.index.list_all_aliases(entity_name)
 
