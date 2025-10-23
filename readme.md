@@ -11,6 +11,12 @@ forge is a lightweight knowledge graph + vectorDB embedded library.
 
 ### quickstart
 
+```bash
+git submodule add https://github.com/arca-research/forge.git forge
+git submodule update --init --recursive
+git commit -m "Add forge submodule"
+```
+
 1. download requirements.txt
 2. create .env and set OPENAI_API_KEY
 3. tune config.py to your liking
@@ -19,6 +25,8 @@ Below is a sample script `main.py` (note that `main.py` and `forge` are at the s
 
 ```python
 from forge import GraphBuilder, GraphQueryEngine, GraphIndex, GraphConfig
+from dataclasses import dataclass
+from pathlib import Path
 
 @dataclass
 class DocData:
@@ -27,6 +35,8 @@ class DocData:
     filepath: Path | str
 
 fp = "data/myfile.txt"
+
+builder = GraphBuilder(debug=True)
 
 # A) Building ---
 # optional: see what the prompt looks like
@@ -47,6 +57,8 @@ builder.build(docs)
 query_engine = GraphQueryEngine()
 entities = query_engine.list_all_entities()
 print(entities)
+
+return # remove this when you're ready
 ent = query_engine.Entity("<ENTITY>") # replace <ENTITY> with desired
 print(ent.claims)
 

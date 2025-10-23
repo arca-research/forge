@@ -21,7 +21,8 @@ from importlib import import_module
 
 import os
 from dotenv import load_dotenv
-load_dotenv()
+env_path = Path(__file__).resolve().parent / ".env"
+load_dotenv(dotenv_path=env_path)
 
 import logging
 log = logging.getLogger("forge")

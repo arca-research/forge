@@ -231,9 +231,6 @@ class GraphBuilder:
     def _upsert_entities(self, entities: list[dict]):
         """Upsert a batch of entities and their claims"""
         for entity in entities:
-            if not entity.get("entity_name") or not entity.get("entity_description"):
-                log.warning("Skipping incomplete entity: %s", entity)
-                continue # | FIXME: move error handling to _process_..
             entity_name = entity["entity_name"]
             entity_type = entity["entity_type"]
             claim = entity.get("entity_description")
@@ -299,39 +296,44 @@ class GraphBuilder:
 
 
     def _process_llm_response(self, llm_response: str) -> tuple[list[dict], list[dict]]:
-        """parse relationships / entities from llm's response
-        
-        TODO: error handling. log? retry?
-        """
+        """parse relationships / entities from llm's response"""
         def _clean(s: str) -> str:
             return s.strip().strip('"').strip()
         
-        text = llm_response.strip().rstrip(self.completion_delimiter)
-        blocks = text.split(self.record_delimiter)
+        try:
+            text = llm_response.strip().rstrip(self.completion_delimiter)
+            blocks = text.split(self.record_delimiter)
+        except Exception as exc:
+            log.exception("Failed to preprocess LLM response: %s", exc)
+            return [], []
 
         entities, relationships = [], []
         for block in blocks:
             block = block.strip().removeprefix("(").removesuffix(")")
             if not block: continue
             
-            kind, *raw_fields = block.split(self.tuple_delimiter)
-            kind = _clean(kind).lower()
-            fields = [_clean(f) for f in raw_fields]
+            try:
+                kind, *raw_fields = block.split(self.tuple_delimiter)
+                kind = _clean(kind).lower()
+                fields = [_clean(f) for f in raw_fields]
 
-            if kind == "entity":
-                name, etype, desc = fields
-                entities.append({
-                    "entity_name": name,
-                    "entity_type": etype,
-                    "entity_description": desc
-                })
-            elif kind == "relationship":
-                src, tgt, desc = fields
-                relationships.append({
-                    "source_name": src,
-                    "target_name": tgt,
-                    "relationship_description": desc
-                })
+                if kind == "entity":
+                    name, etype, desc = fields
+                    entities.append({
+                        "entity_name": name,
+                        "entity_type": etype,
+                        "entity_description": desc
+                    })
+                elif kind == "relationship":
+                    src, tgt, desc = fields
+                    relationships.append({
+                        "source_name": src,
+                        "target_name": tgt,
+                        "relationship_description": desc
+                    })
+            except Exception as exc:
+                log.error("Failed to parse block: %s | Message: %s", block, exc)
+                continue  # skip malformed block
         return entities, relationships
     
 

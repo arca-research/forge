@@ -3,7 +3,6 @@ from .doc import DocLike, Doc
 from .process import ProcessingStats
 from .claim import ClaimData
 from .relationship import RelationshipRecord
-from .entity import EntityRecord
 from .error import (
     RelationshipCollisionError,
     AliasConflictError,
@@ -19,7 +18,6 @@ __all__ = [
     "Doc",
     "ProcessingStats",
     "ClaimData",
-    "EntityRecord",
     "RelationshipRecord",
     "RelationshipCollisionError",
     "AliasConflictError",
