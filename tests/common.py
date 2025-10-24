@@ -1,7 +1,7 @@
 from ..forge.build import VectorDBBuilder, GraphBuilder
 from ..forge.query import VectorQueryEngine, GraphQueryEngine
 from ..forge.state import GraphIndex
-from ..config import GraphConfig, VectorDBConfig
+from ..config import GraphConfig, VectorDBConfig, LLMConfig
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -24,3 +24,4 @@ class DocData:
 
 GRAPH_CONFIG = GraphConfig()
 GRAPH_BUILDER = GraphBuilder(debug=True)
+LLM_CONFIG = LLMConfig()

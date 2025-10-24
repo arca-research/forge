@@ -35,7 +35,7 @@ class VectorQueryEngine:
         self.cfg = cfg
         self.embedder = Embedder(self.cfg.embed_model, self.cfg.batch_size)
         self.vector_index = VectorIndex(self.cfg, self.embedder.dim, rebuild=False)
-        self.meta_index = MetaIndex(self.cfg)
+        self.meta_index = MetaIndex(self.cfg.meta_index_path)
 
 
     def run_query_engine(self):
@@ -183,7 +183,7 @@ class GraphQueryEngine:
         return self.index.list_all_entities()
 
 
-    def list_all_aliases(self, entity_name: Optional[str] = None):
+    def list_all_aliases(self, entity_name: str):
         """List aliases"""
         return self.index.list_all_aliases(entity_name)
 
