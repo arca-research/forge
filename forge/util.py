@@ -114,6 +114,17 @@ def chunk(
     return chunks_data, chunks_text
 
 
+# --- progress bar ---
+
+def print_progress_bar(current: int, total: int, width: int = 50):
+    """Print a progress bar to stdout"""
+    progress = current / total
+    filled = int(width * progress)
+    bar = '█' * filled + '░' * (width - filled)
+    percent = int(progress * 100)
+    print(f'\r[{bar}] {percent}% ({current}/{total})')
+
+
 # ---
 
 def pricing(words: str, input_price_per_M: float, output_price_per_M: float):
