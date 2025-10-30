@@ -29,5 +29,22 @@ def test_process_llm_response():
     TEST_LOG.info("entities: %s", entities)
     TEST_LOG.info("relationships: %s", relationships)
 
+
+def test_progress_bar():
+    from ..forge.util import print_progress_bar
+    import time
+    docs = ["a", "b", "c"]
+    total = len(docs)
+    print_progress_bar(0, total)
+    for i in range(0, len(docs), 1):
+        batch = docs[i : i + 1]
+        for j, doc in enumerate(batch):
+            current = i + j + 1
+            time.sleep(3)
+            TEST_LOG.info(f'{doc}')
+            print_progress_bar(current, total)
+    
+
 if __name__ == "__main__":
-    test_process_llm_response()
+    # test_process_llm_response()
+    test_progress_bar()

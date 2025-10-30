@@ -12,7 +12,7 @@ from ..config import log, VectorDBConfig, GraphConfig, LLMConfig, HEAD
 from .state import VectorIndex, MetaIndex, GraphIndex
 from .embed import Embedder
 from .llm import SyncLLM, AsyncLLM
-from .util import fetch_doc, chunk
+from .util import fetch_doc, chunk, print_progress_bar
 from ._schemas import (
     ChunkData,
     DocLike, Doc,
@@ -164,6 +164,11 @@ class GraphBuilder:
         Top-level graph builder entrypoint.
         Dispatches to sync or async version.
         """
+        total = len(docs)
+        if total == 0:
+            raise ValueError("No documents provided to build graph")
+        log.info(f"Now building graph with {total} document{'s' if total != 1 else ''}")
+
         docs = [Doc(**vars(doc)) if not isinstance(doc, Doc) else doc for doc in docs]
         if self.extraction_concurrency == "sync":
             self._build_sync(docs)
@@ -173,11 +178,14 @@ class GraphBuilder:
     
     def _build_sync(self, docs: list[DocLike]):
         """"""
+        total = len(docs)
+        print_progress_bar(0, total)
         for i in range(0, len(docs), self.batch_size):
             batch = docs[i : i + self.batch_size]
             entities_batch, relationships_batch = [], []
 
-            for doc in batch:
+            for j, doc in enumerate(batch):
+                current = i + j + 1
                 doc_text = fetch_doc(doc.filepath)
                 prompt = self._build_extraction_prompt(
                     document=doc_text,
@@ -191,6 +199,7 @@ class GraphBuilder:
                 e, r = self._add_metadata(entities=e, relationships=r, date=doc.date, source=doc.source)
                 entities_batch.extend(e)
                 relationships_batch.extend(r)
+                print_progress_bar(current, total)
 
             self._upsert_entities(entities_batch)
             self._upsert_relationships(relationships_batch)
