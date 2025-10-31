@@ -31,7 +31,7 @@ def test_process_llm_response():
 
 
 def test_progress_bar():
-    from ..forge.util import print_progress_bar
+    from ..src.util import print_progress_bar
     import time
     docs = ["a", "b", "c"]
     total = len(docs)

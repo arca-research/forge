@@ -1,9 +1,9 @@
-# FORGE
+# nexus
 
-forge is a lightweight knowledge graph + vectorDB embedded library.
+nexus is a lightweight knowledge graph + vectorDB embedded library.
 
 <p align="center">
-  <img src="https://github.com/arca-research/forge/blob/main/forge.png" width="450"/>
+  <img src="https://github.com/arca-research/nexus/blob/main/nexus.png" width="450"/>
 </p>
 <p align="center">
         <b>VERSION 0.1</b>&nbsp
@@ -12,19 +12,19 @@ forge is a lightweight knowledge graph + vectorDB embedded library.
 ### quickstart
 
 ```bash
-git submodule add https://github.com/arca-research/forge.git forge
+git submodule add https://github.com/arca-research/nexus.git nexus
 git submodule update --init --recursive
-git commit -m "Add forge submodule"
+git commit -m "Add nexus submodule"
 ```
 
 1. download requirements.txt
 2. create .env and set OPENAI_API_KEY
 3. tune config.py to your liking
 
-Below is a sample script `main.py` (note that `main.py` and `forge` are at the same level)
+Below is a sample script `main.py` (note that here, `main.py` and `nexus` are at the same level)
 
 ```python
-from forge import GraphBuilder, GraphQueryEngine, GraphIndex, GraphConfig
+from nexus import GraphBuilder, GraphQueryEngine, GraphIndex, GraphConfig
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -50,7 +50,7 @@ doc = DocData(document_id=0, filepath=fp)
 # build() accepts list[DocLike] (defined in _schemas)
 docs = [doc]
 
-# build() will run LLM extraction and build a graph db in .forge
+# build() will run LLM extraction and build a graph db in .nexus
 builder.build(docs)
 
 # B) Using the query engine ---

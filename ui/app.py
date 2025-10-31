@@ -13,8 +13,8 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 try:
-    from ..forge.state.graph_index import GraphIndex
-    from ..forge._schemas import (
+    from ..src.state.graph_index import GraphIndex
+    from ..src._schemas import (
         EntityNotFoundError,
         RelationshipCollisionError,
     )
@@ -25,7 +25,7 @@ except ImportError as exc:  # pragma: no cover - fail fast during import issues
     ) from exc
 
 
-LOGGER = logging.getLogger("forge-ui")
+LOGGER = logging.getLogger("nexus-ui")
 if not LOGGER.handlers:
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter("%(message)s"))
@@ -84,7 +84,7 @@ class EdgeResponse(BaseModel):
 
 
 app = FastAPI(
-    title="forge",
+    title="nexus",
     version="0.1.0",
     description="Read-only graph viewer backed by GraphIndex.",
 )
@@ -350,7 +350,7 @@ def main() -> None:
     import uvicorn
 
     uvicorn.run(
-        "forge.ui.app:app",
+        "nexus.ui.app:app",
         host=args.host,
         port=args.port,
         reload=args.reload,

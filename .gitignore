@@ -3,7 +3,7 @@
 __pycache__
 
 # --- templates ---
-forge/_templates/*
-!forge/_templates/__init__.py
-!forge/_templates/base.py
-!forge/_templates/note.md
+src/_templates/*
+!src/_templates/__init__.py
+!src/_templates/base.py
+!src/_templates/note.md

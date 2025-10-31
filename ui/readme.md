@@ -27,13 +27,13 @@ pip install requirements-ui.txt
 
 ```bash
 export GRAPH_INDEX_PATH="/absolute/path/to/graph.sqlite"
-uvicorn forge.ui.app:app --reload --port 8099
+uvicorn nexus.ui.app:app --reload --port 8099
 ```
 
 *or*
 
 ```bash
-uvicorn forge.ui.app:app --reload --port 8099 --env-file .env
+uvicorn nexus.ui.app:app --reload --port 8099 --env-file .env
 # where .env contains:
 # GRAPH_INDEX_PATH=/absolute/path/to/graph.sqlite
 ```

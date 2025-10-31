@@ -1,5 +1,5 @@
 """
-Error schemas across forge
+Error schemas across nexus
 """
 
 from typing import Optional

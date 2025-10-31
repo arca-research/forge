@@ -1,17 +1,17 @@
 """
-Forge configuration file.
+Nexus configuration file.
 """
 
 
-HEAD="""
-
-███████╗ ██████╗ ██████╗  ██████╗ ███████╗
-██╔════╝██╔═══██╗██╔══██╗██╔════╝ ██╔════╝
-█████╗  ██║   ██║██████╔╝██║  ███╗█████╗  
-██╔══╝  ██║   ██║██╔══██╗██║   ██║██╔══╝  
-██║     ╚██████╔╝██║  ██║╚██████╔╝███████╗
-╚═╝      ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝                                      
-""" # https://manytools.org/hacker-tools/ascii-banner/
+HEAD="""                                           
+                                           
+ ████████    ██████  █████ █████ █████ ████  █████ 
+░░███░░███  ███░░███░░███ ░░███ ░░███ ░███  ███░░  
+ ░███ ░███ ░███████  ░░░█████░   ░███ ░███ ░░█████ 
+ ░███ ░███ ░███░░░    ███░░░███  ░███ ░███  ░░░░███
+ ████ █████░░██████  █████ █████ ░░████████ ██████ 
+░░░░ ░░░░░  ░░░░░░  ░░░░░ ░░░░░   ░░░░░░░░ ░░░░░░                                                  
+""" # https://manytools.org/hacker-tools/ascii-banner/ (DOS Rebel)
 
 
 from pathlib import Path
@@ -25,7 +25,7 @@ env_path = Path(__file__).resolve().parent / ".env"
 load_dotenv(dotenv_path=env_path)
 
 import logging
-log = logging.getLogger("forge")
+log = logging.getLogger("nexus")
 log.setLevel(logging.INFO)
 if not log.handlers:
     handler = logging.StreamHandler()
@@ -38,7 +38,7 @@ if not log.handlers:
 @dataclass
 class VectorDBConfig:
     rebuild: bool = True
-    stage_dir: Path = field(default_factory=lambda: Path(".forge"))
+    stage_dir: Path = field(default_factory=lambda: Path(".nexus"))
     data_dir: Path = field(default_factory=lambda: Path(".data"))
     index_type: str = field(default_factory=lambda: "hnsw")
     meta_index_path: Path = None # set in __post_init__
@@ -63,7 +63,7 @@ class VectorDBConfig:
 
 @dataclass
 class GraphConfig:
-    stage_dir: Path = field(default_factory=lambda: Path(".forge"))
+    stage_dir: Path = field(default_factory=lambda: Path(".nexus"))
     graph_index_path: Path = None # set in __post_init__
     graph_meta_path: Path = None # set in __post_init__
 
@@ -78,7 +78,7 @@ class GraphConfig:
     ])
     extraction_templates: dict[str, dict] = field(default_factory=dict)
     entity_templates: dict = field(default_factory=dict)
-    template_directory: str = ".forge._templates" # can be set to another dir
+    template_directory: str = ".src._templates" # can be set to another dir
 
 
     entity_fields: list[str] = field(default_factory=lambda: [

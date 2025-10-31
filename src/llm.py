@@ -3,7 +3,7 @@ LLM primitives: SyncLLM and AsyncLLM
 
 TODO: add openrouter
 
-TODO: add logging of every call (to .forge)
+TODO: add logging of every call (to .nexus)
 """
 
 from __future__ import annotations
@@ -45,12 +45,12 @@ class SyncLLM(_BaseLLM):
             try:
                 self.client = OpenAI(api_key=api_key)
             except:
-                raise ValueError("OpenAI API key is not set in forge/.env.")
+                raise ValueError("OpenAI API key is not set in nexus/.env.")
         elif self.backend == "openrouter":
             raise NotImplementedError("Openrouter is not yet supported.") # | TODO
         elif self.backend == "local":
             if url is None:
-                raise ValueError("Local LLM client url is not set in forge/config.py")
+                raise ValueError("Local LLM client url is not set in nexus/config.py")
             self.client = OpenAI(base_url=url, api_key="local")
         self.model = model
         self.log_path = log_path
@@ -94,12 +94,12 @@ class AsyncLLM(_BaseLLM):
             try:
                 self.client = AsyncOpenAI(api_key=api_key)
             except:
-                raise ValueError("OpenAI API key is not set in forge/.env.")
+                raise ValueError("OpenAI API key is not set in nexus/.env.")
         elif self.backend == "openrouter":
             raise NotImplementedError("Openrouter is not yet supported.") # | TODO
         elif self.backend == "local":
             if url is None:
-                raise ValueError("Local LLM client url is not set in forge/config.py")
+                raise ValueError("Local LLM client url is not set in nexus/config.py")
             self.client = AsyncOpenAI(base_url=url, api_key="local")
         self.model = model
         self.log_path = log_path
